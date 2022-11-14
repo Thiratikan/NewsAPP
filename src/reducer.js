@@ -7,6 +7,9 @@ import {
 } from "./actions";
 
 const reducer = (state, action) => {
+  // action.type will update type in dispatch
+  // switch is like if statement
+
   switch (action.type) {
     case SET_LOADING:
       return { ...state, isLoading: true };
@@ -26,5 +29,10 @@ const reducer = (state, action) => {
     default:
       throw new Error(`no matching "${action.type}" action type`);
   }
+  // ${} It's used to reference a variable within string
+  //   const one = 1;
+  //   const two = 2;
+  //   const result = `One add two is ${one + two}`;
+  //   console.log(result); // output: One add two is 3
 };
 export default reducer;

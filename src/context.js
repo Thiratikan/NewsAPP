@@ -18,14 +18,21 @@ const initialState = {
   page: 0,
   nbPages: 0,
 };
+// hits is something that will get back
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // dispatch call reducer to update the current state
+  // in reducer pare, reducer will take state and action
+  // whatever happens in action will pass to dispatch.
+  // then reducer wil just return to update the state
+
   const fetchStories = async (url) => {
     dispatch({ type: SET_LOADING });
+
     try {
       const respond = await fetch(url);
       const data = await respond.json();
@@ -33,6 +40,8 @@ const AppProvider = ({ children }) => {
         type: SET_STORIES,
         payload: { hits: data.hits, nbPages: data.nbPages },
       });
+      // payload send additional infomation to reducer it can also be other name
+      // it's a property of action
     } catch (error) {
       console.log(error);
     }
@@ -42,6 +51,8 @@ const AppProvider = ({ children }) => {
   };
   const handleSearch = (query) => {
     dispatch({ type: HANDLE_SEARCH, payload: query });
+
+    // dispatch always includes type
   };
 
   useEffect(() => {
