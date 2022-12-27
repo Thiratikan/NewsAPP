@@ -14,7 +14,7 @@ const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?";
 const initialState = {
   isLoading: true,
   hits: [],
-  query: "react",
+  query: "",
   page: 0,
   nbPages: 0,
 };
@@ -55,12 +55,17 @@ const AppProvider = ({ children }) => {
     // dispatch always includes type
   };
 
+  const handlePage = (value) => {
+    dispatch({ type: HANDLE_PAGE, payload: value });
+  };
   useEffect(() => {
     fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`);
-  }, []);
+  }, [state.query, state.page]);
 
   return (
-    <AppContext.Provider value={{ ...state, removeStory, handleSearch }}>
+    <AppContext.Provider
+      value={{ ...state, removeStory, handleSearch, handlePage }}
+    >
       {children}
     </AppContext.Provider>
   );
